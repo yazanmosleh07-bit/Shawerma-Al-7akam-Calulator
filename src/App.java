@@ -8,10 +8,33 @@
 
 
 import javax.swing.*;
-import java.util.Scanner;
+
 
 public class App {
 
+    //these are the components of the GUI
+    static JFrame mainWindow = new JFrame("Shawerma Al 7akam Calculator");// Create a new JFrame with the title "Shawerma Al 7akam Calculator"
+    
+    static JLabel metricLabel = new JLabel("Metric Type");// Create a new JLabel with the text "Enter the metric value:"
+    
+    static JLabel mealLabel = new JLabel("Meal Type");// Create a new JLabel with the text "Enter the metric value:"
+
+    static JButton submitButton = new JButton("Submit");// Create a new JButton with the text "Submit"
+    
+    static JComboBox<String> metricComboBox = new JComboBox<>(new String[] {"Days", "Minutes", "Hours"});// Create a new JComboBox with the options "Days", "Minutes", and "Hours"
+    
+    static JPanel ComboBoxPanel = new JPanel();// Create a new JPanel to hold the JComboBoxes
+
+    static JPanel submitPanel = new JPanel();// Create a new JPanel to hold the JButton
+
+    static JPanel metricPanel = new JPanel();// Create a new JPanel to hold the JTextField
+
+    static JPanel mealPanel = new JPanel();// Create a new JPanel to hold the JButton
+
+    static JComboBox<String> mealComboBox = new JComboBox<>(new String[] {"Super Meal 2.5JD", "Double Meal 3.20JD", "Triple Meal 4.35JD"});// Create a new JComboBox with the options "Shawerma Meal 1", "Shawerma Meal 2", and "Shawerma Meal 3"
+    
+    static JTextField metricTextField = new JTextField(10);// Create a new JTextField
+    
     public static void main(String[] args) {
         creatGUI();
     
@@ -64,16 +87,31 @@ public class App {
     
     
     public static void creatGUI() {
-        JFrame mainWindow = new JFrame("Shawerma Al 7akam Calculator");// Create a new JFrame with the title "Shawerma Al 7akam Calculator"
-        
         
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setSize(400, 300);
         mainWindow.setLocationRelativeTo(null);
         
+        
+        
+        //mainwindow --> comboBoxPanel --> metricPanel, mealPanel 
+        //Main window layout
+        mainWindow.add(ComboBoxPanel);
+        mainWindow.add(submitPanel);
+        //comboBoxPanel layout
+        ComboBoxPanel.add(metricPanel);
+        ComboBoxPanel.add(mealPanel);
+        
+        //metricPanel layout
+        metricPanel.add(metricComboBox);
+        metricPanel.add(metricLabel);
+        
+        //mealPanel layout
+        mealPanel.add(mealComboBox);
+        mealPanel.add(mealLabel);
     
-    
-    
+        //submitPanel layout
+        submitPanel.add(submitButton);
     
        
        
