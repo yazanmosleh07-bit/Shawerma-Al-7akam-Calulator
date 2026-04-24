@@ -8,7 +8,8 @@
 
 
 import javax.swing.*;
-
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 public class App {
 
@@ -35,14 +36,21 @@ public class App {
     
     static JTextField metricTextField = new JTextField(10);// Create a new JTextField
     
-    public static void main(String[] args) {
-        creatGUI();
-    
+    static JPanel centerPanel = new JPanel(); // FlowLayout by default (CENTERED)
 
+    public static void main(String[] args) {
+    // Set the look and feel to the system's look and feel
+    try {
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     
+    // Create and display the GUI
+    creatGUI();
     
     }
-
+    //this method will calculate the amount of shawerma meals in the given metric and output the result to the user
     public static double calculateShawermaMealsInDays(double metric, double price) {
         //x * 48 = amount of meals
         double meals = 0.0;
@@ -51,13 +59,11 @@ public class App {
         meals = metric * 48; //amount of meals in the given metric
         cost = meals * price;//total cost of the meals
 
-        System.out.println("In "+ metric + " days, you can eat " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
+        JOptionPane.showMessageDialog(mainWindow, "In "+ metric + " days, you can buy " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
         return meals;
     }
 
-
-
-    
+    //this method will calculate the amount of shawerma meals in the given metric and output the result to the user
     public static double calculateShawermaMealsInMins(double metric, double price) {
         //x * 0.033 = amount of meals
         double meals = 0.0;
@@ -66,11 +72,11 @@ public class App {
         meals = metric * 0.033;//amount of meals in the given metric
         cost = meals * price;//total cost of the meals
 
-        System.out.println("In "+ metric + " minutes, you can eat " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
+        JOptionPane.showMessageDialog(mainWindow, "In "+ metric + " minutes, you can buy " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
         return meals;
     }
 
-
+    //this method will calculate the amount of shawerma meals in the given metric and output the result to the user
     public static double calculateShawermaMealsInHours(double metric, double price) {
         //x * 2 = amount of meals
         double meals = 0.0;//amount of meals in the given metric
@@ -79,7 +85,7 @@ public class App {
         meals = metric * 2;
         cost = meals * price;
 
-        System.out.println("In "+ metric + " hours, you can eat " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
+        JOptionPane.showMessageDialog(mainWindow, "In "+ metric + " hours, you can buy " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
 
 
         return meals;
@@ -96,11 +102,11 @@ public class App {
         
         //mainwindow --> comboBoxPanel --> metricPanel, mealPanel 
         //Main window layout
-        mainWindow.add(ComboBoxPanel);
-        mainWindow.add(submitPanel);
+        mainWindow.add(ComboBoxPanel, BorderLayout.NORTH);
+        mainWindow.add(submitPanel, BorderLayout.SOUTH);
         //comboBoxPanel layout
-        ComboBoxPanel.add(metricPanel);
-        ComboBoxPanel.add(mealPanel);
+        ComboBoxPanel.add(metricPanel, BorderLayout.WEST);
+        ComboBoxPanel.add(mealPanel, BorderLayout.EAST);
         
         //metricPanel layout
         metricPanel.add(metricComboBox);
@@ -111,13 +117,59 @@ public class App {
         mealPanel.add(mealLabel);
     
         //submitPanel layout
-        submitPanel.add(submitButton);
-    
+        submitPanel.add(centerPanel, BorderLayout.CENTER);
+        centerPanel.add(metricTextField, BorderLayout.CENTER);
+        centerPanel.add(submitButton, BorderLayout.SOUTH);
+        
+        //now we will work on the logic of the submit button
+        submitButton.addActionListener(e -> {
+            String selectedMetric = (String) metricComboBox.getSelectedItem();
+            String selectedMeal = (String) mealComboBox.getSelectedItem();
+            double metricValue = Double.parseDouble(metricTextField.getText());
+            double mealPrice = 0.0;
+
+            switch (selectedMeal) {
+                case "Super Meal 2.5JD":
+                    mealPrice = 2.5;
+                    break;
+                case "Double Meal 3.20JD":
+                    mealPrice = 3.20;
+                    break;
+                case "Triple Meal 4.35JD":
+                    mealPrice = 4.35;
+                    break;
+            }
+
+
+            
+            switch (selectedMetric) {
+                case "Days":
+                    calculateShawermaMealsInDays(metricValue, mealPrice);
+                    break;
+                case "Hours":
+                    calculateShawermaMealsInHours(metricValue, mealPrice);
+                    break;
+                case "Minutes":
+                    calculateShawermaMealsInMins(metricValue, mealPrice);
+                    break;
+            }
+
+        });
+
+            
+
+
+
+
+        
+
+
+
+
        
-       
-       
-        mainWindow.setVisible(true);
+        
         mainWindow.pack();
+        mainWindow.setVisible(true);
     }
 
 
