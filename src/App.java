@@ -10,7 +10,7 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-
+import java.math.*;
 public class App {
 
     //these are the components of the GUI
@@ -41,15 +41,19 @@ public class App {
     public static void main(String[] args) {
     // Set the look and feel to the system's look and feel
     try {
-        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     } catch (Exception e) {
         e.printStackTrace();
     }
+
     
     // Create and display the GUI
-    creatGUI();
+    SwingUtilities.invokeLater(() -> creatGUI());
     
     }
+
+
+
     //this method will calculate the amount of shawerma meals in the given metric and output the result to the user
     public static double calculateShawermaMealsInDays(double metric, double price) {
         //x * 48 = amount of meals
@@ -59,7 +63,7 @@ public class App {
         meals = metric * 48; //amount of meals in the given metric
         cost = meals * price;//total cost of the meals
 
-        JOptionPane.showMessageDialog(mainWindow, "In "+ metric + " days, you can buy " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
+        JOptionPane.showMessageDialog(mainWindow, "In "+ Math.round(metric * 10000.0) / 10000.0 + " days, you can buy " + Math.round(meals * 10000.0) / 10000.0 + " shawerma meals, which will cost you " + Math.round(cost * 10000.0) / 10000.0 + " Dinars.");
         return meals;
     }
 
@@ -72,7 +76,7 @@ public class App {
         meals = metric * 0.033;//amount of meals in the given metric
         cost = meals * price;//total cost of the meals
 
-        JOptionPane.showMessageDialog(mainWindow, "In "+ metric + " minutes, you can buy " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
+        JOptionPane.showMessageDialog(mainWindow, "In "+ Math.round(metric * 10000.0) / 10000.0 + " minutes, you can buy " + Math.round(meals * 10000.0) / 10000.0 + " shawerma meals, which will cost you " + Math.round(cost * 10000.0) / 10000.0 + " Dinars.");
         return meals;
     }
 
@@ -85,7 +89,7 @@ public class App {
         meals = metric * 2;
         cost = meals * price;
 
-        JOptionPane.showMessageDialog(mainWindow, "In "+ metric + " hours, you can buy " + meals + " shawerma meals, which will cost you " + cost + " Dinars.");
+        JOptionPane.showMessageDialog(mainWindow, "In "+ Math.round(metric * 10000.0) / 10000.0 + " hours, you can buy " + Math.round(meals * 10000.0) / 10000.0 + " shawerma meals, which will cost you " + Math.round(cost * 10000.0) / 10000.0 + " Dinars.");
 
 
         return meals;
@@ -105,8 +109,8 @@ public class App {
         mainWindow.add(ComboBoxPanel, BorderLayout.NORTH);
         mainWindow.add(submitPanel, BorderLayout.SOUTH);
         //comboBoxPanel layout
-        ComboBoxPanel.add(metricPanel, BorderLayout.WEST);
-        ComboBoxPanel.add(mealPanel, BorderLayout.EAST);
+        ComboBoxPanel.add(metricPanel);
+        ComboBoxPanel.add(mealPanel);
         
         //metricPanel layout
         metricPanel.add(metricComboBox);
@@ -123,57 +127,62 @@ public class App {
         
         //now we will work on the logic of the submit button
         submitButton.addActionListener(e -> {
-            String selectedMetric = (String) metricComboBox.getSelectedItem();
-            String selectedMeal = (String) mealComboBox.getSelectedItem();
-            double metricValue = Double.parseDouble(metricTextField.getText());
-            double mealPrice = 0.0;
+    try {
+        String selectedMetric = (String) metricComboBox.getSelectedItem();
+        String selectedMeal = (String) mealComboBox.getSelectedItem();
 
-            switch (selectedMeal) {
-                case "Super Meal 2.5JD":
-                    mealPrice = 2.5;
-                    break;
-                case "Double Meal 3.20JD":
-                    mealPrice = 3.20;
-                    break;
-                case "Triple Meal 4.35JD":
-                    mealPrice = 4.35;
-                    break;
-            }
+        String input = metricTextField.getText().trim();
 
+        if (input.isEmpty()) {
+            JOptionPane.showMessageDialog(mainWindow, "Please enter a value.");
+            return;
+        }
 
-            
-            switch (selectedMetric) {
-                case "Days":
-                    calculateShawermaMealsInDays(metricValue, mealPrice);
-                    break;
-                case "Hours":
-                    calculateShawermaMealsInHours(metricValue, mealPrice);
-                    break;
-                case "Minutes":
-                    calculateShawermaMealsInMins(metricValue, mealPrice);
-                    break;
-            }
+        double metricValue = Double.parseDouble(input);
+        double mealPrice = 0.0;
 
-        });
+        switch (selectedMeal) {
+            case "Super Meal 2.5JD":
+                mealPrice = 2.5;
+                break;
+            case "Double Meal 3.20JD":
+                mealPrice = 3.20;
+                break;
+            case "Triple Meal 4.35JD":
+                mealPrice = 4.35;
+                break;
+        }
 
-            
-
-
-
-
+        switch (selectedMetric) {
+            case "Days":
+                calculateShawermaMealsInDays(metricValue, mealPrice);
+                break;
+            case "Hours":
+                calculateShawermaMealsInHours(metricValue, mealPrice);
+                break;
+            case "Minutes":
+                calculateShawermaMealsInMins(metricValue, mealPrice);
+                break;
+        }
+        // Clear the input field after calculation
+        metricTextField.setText("");
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(mainWindow,
+                "Please enter a valid number.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+    } 
+    // Catch any other unexpected exceptions
+    catch (Exception ex) {
+        JOptionPane.showMessageDialog(mainWindow,
+                ex.toString(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+            });
         
-
-
-
-
-       
-        
+                                                
         mainWindow.pack();
         mainWindow.setVisible(true);
-    }
-
-
-
-
-    
+    }  
 }
