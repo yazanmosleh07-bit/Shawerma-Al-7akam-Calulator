@@ -1,19 +1,36 @@
-## Getting Started
+## Shawarma Converter
+This project started as a joke between me and my friends—we used to measure everything in shawarma meals. I decided to turn that idea into a small program using my basic knowledge of programming and math.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
-## Folder Structure
+## You can find the full documentation here:
+👉 https://docs.google.com/document/d/1JQzC-KsEOOaadhyY7EPiVbqOVvJzaCnny7SHmV1fnYU/edit?usp=sharing
 
-The workspace contains two folders by default, where:
+## Why?
+Because sometimes normal units are boring—and shawarma makes everything better.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Features (optional — add if relevant)
+Convert time into shawarma meals
+Simple math-based calculations
+Simple UI
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Installation
+1. Clone the repository(or download the .zip file)
+<pre> git clone https://github.com/your-username/shawarma-converter.git </pre>
+<pre> cd shawarma-converter </pre>
+2. Compile (Java example)
+<pre>javac App.java</pre>
+3. Run
+<pre>java App</pre>
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+If your project uses a .jar file:
 
-## Dependency Management
+<pre>java -jar ShawarmaConverter.jar</pre>
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
-# Shawerma-Al-7akam-Calulator
+
+## Contributing
+
+Contributions are welcome! Feel free to fork the repo and submit a pull request.
+
+## Tech Stack
+Java
+Basic math logic
