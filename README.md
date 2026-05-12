@@ -21,7 +21,7 @@ simply just download the latest release and run the **Shawarma Calculator.jar** 
 
 ### Method 2(If the .jar isn't working)
 1. Clone the repository(or download the .zip file)
-<pre> git clone https://github.com/your-username/shawarma-converter.git </pre>
+<pre> https://github.com/yazanmosleh07-bit/Shawerma-Al-7akam-Calulator.git </pre>
 <pre> cd shawarma-converter </pre>
 2. Compile (Java example)
 <pre>javac App.java</pre>
